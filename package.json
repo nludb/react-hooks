@@ -1,6 +1,6 @@
 {
   "name": "@nludb/react-hooks",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "React Hooks for use with NLUDB",
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
@@ -9,9 +9,9 @@
   "license": "MIT",
   "contributors": [
     {
-      "name" : "Edward Benson",
-      "email" : "ted@nludb.com",
-      "url" : "https://www.edwardbenson.com/"
+      "name": "Edward Benson",
+      "email": "ted@nludb.com",
+      "url": "https://www.edwardbenson.com/"
     }
   ],
   "scripts": {

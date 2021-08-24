@@ -1,11 +1,19 @@
 {
-  "name": "@nludb/react-client",
+  "name": "@nludb/react-hooks",
   "version": "1.0.0",
   "description": "React Hooks for use with NLUDB",
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
   "types": "./lib/esm/index.d.ts",
+  "repository": "https://github.com/nludb/react-hooks",
   "license": "MIT",
+  "contributors": [
+    {
+      "name" : "Edward Benson",
+      "email" : "ted@nludb.com",
+      "url" : "https://www.edwardbenson.com/"
+    }
+  ],
   "scripts": {
     "dev": "cd example && yarn start",
     "build": "yarn build:esm && yarn build:cjs",

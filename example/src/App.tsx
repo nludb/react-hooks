@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {useNLUDB, useEmbeddingIndex} from '@nludb/react-client';
+import {useParser, useNLUDB, useEmbeddingIndex} from '@nludb/react-hooks';
 import { EmbeddingModel } from '@nludb/client'
 
 import './App.css';
@@ -58,6 +58,13 @@ function IndexDemo() {
     verbose: true
   })
 
+
+  const [{results: parseResults, isParsing, error: parseError}, {reset: resetParse, parse}] = useParser({
+    nludb,
+    includeTokens: false,
+    includeEntities: true
+  })
+
   const doInsert = (item: string) => {
     console.log("doInsert", item);
     insert({value: item, upsert: true})
@@ -66,6 +73,11 @@ function IndexDemo() {
   const doSearch = (query: string) => {
     console.log("doSearch", query);
     search({query})
+  }
+
+  const doParse = (query: string) => {
+    console.log("doParse", query);
+    parse({docs: [query]})
   }
 
   return (
@@ -88,6 +100,17 @@ function IndexDemo() {
           </table>
         </li>
       </ul>
+
+      <p>This is a demonstration of the <code>useParser</code> hook:</p>
+      <SearchBar onSubmit={doParse} placeholder="New Item" buttonText="Parse" />
+      <h2>Results:</h2>
+      <ul>
+        <li>isParsing: {JSON.stringify(isParsing)}</li>
+        <li>Parse Results:
+          <pre><code>{JSON.stringify(parseResults, undefined, 2)}</code></pre>
+        </li>
+      </ul>
+
     </div>
   );
 }

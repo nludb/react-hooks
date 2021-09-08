@@ -44,7 +44,7 @@
     "/lib"
   ],
   "dependencies": {
-    "@nludb/client": ">=1.0.22",
+    "@nludb/client": "^1.0.27",
     "@types/deep-equal": "^1.0.1",
     "deep-equal": "^2.0.5",
     "react-use": "^17.2.4"

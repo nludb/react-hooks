@@ -14,7 +14,7 @@
     "react-dom": ">=16.8.0",
     "react-scripts": "3.4.3",
     "typescript": "~3.7.2",
-    "@nludb/react-client": "link:.."
+    "@nludb/react-hooks": "link:.."
   },
   "scripts": {
     "start": "react-scripts start",

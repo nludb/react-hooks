@@ -4,6 +4,7 @@ import useSafeGetSet from './util/useSafeGetSet';
 
 export interface State {
   results: SearchResult | null,
+  isReady: boolean;
   isSearching: boolean,
   error: Error | null
 }
@@ -145,6 +146,7 @@ export const useEmbeddingIndex = (params: UseIndexParams): [State, Actions] => {
   const state = {
     results: getSearchResult(),
     isSearching: getIsSearching(),
+    isReady: embeddingIndex != null,
     error: getError()
   }
 

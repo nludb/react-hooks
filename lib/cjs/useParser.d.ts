@@ -1,7 +1,7 @@
 import { NLUDB, ParseRequest, ParseResponse } from '@nludb/client';
 export interface State {
     results: ParseResponse | null;
-    isSearching: boolean;
+    isParsing: boolean;
     error: Error | null;
 }
 export interface StableActions {

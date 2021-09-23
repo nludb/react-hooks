@@ -4,7 +4,7 @@ import useSafeGetSet from './util/useSafeGetSet';
 
 export interface State {
   results: ParseResponse | null,
-  isSearching: boolean,
+  isParsing: boolean,
   error: Error | null
 }
 
@@ -94,7 +94,7 @@ export const useParser = (params: UseParserParams): [State, Actions] => {
 
   const state = {
     results: getParseResult(),
-    isSearching: getIsParsing(),
+    isParsing: getIsParsing(),
     error: getError()
   }
 

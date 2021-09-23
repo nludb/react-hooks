@@ -37,9 +37,11 @@ export const useParser = (params: UseParserParams): [State, Actions] => {
     if (! params.nludb) {
       params.verbose && console.log("no NLUDB")
       setError(new Error("No NLUDB client available to perform parse."))
+      setIsParsing(false);
       setParseResult(null)
     } else if (! getParseRequest()) {
       params.verbose && console.log("Parse request absent.")
+      setIsParsing(false);
       setParseResult(null)
     } else {
       // Perform the search
@@ -68,6 +70,7 @@ export const useParser = (params: UseParserParams): [State, Actions] => {
       ).catch(
         (error: Error) => {
           params.verbose && console.log("useParser:parse:Exception", error);
+          setIsParsing(false);
           setParseResult(null);
           setError(error)
         }
@@ -77,7 +80,7 @@ export const useParser = (params: UseParserParams): [State, Actions] => {
 
   // Actions for consumer to interact with the index.
   const stableActions = useMemo<StableActions>(() => {
-    const reset = () => { setParseRequest(null) };
+    const reset = () => { setIsParsing(false); setParseRequest(null) };
     const parse = (request: ParseRequest) => {
       // TODO:
       // Can we prevent this from being called *after* the result comes back?
@@ -87,6 +90,7 @@ export const useParser = (params: UseParserParams): [State, Actions] => {
       // return above.
       params.verbose && console.log("useParser:parseRequest:set", request);
       setError(null);
+      setIsParsing(true);
       setParseRequest(request);
     }
     return { reset, parse };

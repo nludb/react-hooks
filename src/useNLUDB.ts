@@ -11,7 +11,6 @@ export interface NLUDBReactConnectionParams {
 }
 
 export const useNLUDB = (params: NLUDBReactConnectionParams): [NLUDB | null, NLUDBError | null] => {
-console.log("new params");
   const [getError, setError] = useSafeGetSet<Error | null>(null);
 
   const nludb = useMemo<NLUDB|null>(() => {

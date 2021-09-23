@@ -65,13 +65,16 @@ export const useEmbeddingIndex = (params: UseIndexParams): [State, Actions] => {
     if (! params.nludb) {
       params.verbose && console.log("no NLUDB")
       setError(new Error("No NLUDB client available to perform search."))
+      setIsSearching(false);
       setSearchResult(null)
     } else if (! getSearchRequest()) {
       params.verbose && console.log("Search request absent.")
+      setIsSearching(false);
       setSearchResult(null)
     } else if (! embeddingIndex) {
       params.verbose && console.log("no index")
       setError(new Error("No index available to perform search."))
+      setIsSearching(false);
       setSearchResult(null)
     } else {
       // Perform the search
@@ -93,6 +96,7 @@ export const useEmbeddingIndex = (params: UseIndexParams): [State, Actions] => {
       ).catch(
         (error: Error) => {
           params.verbose && console.log("useIndex:search:Exception", error);
+          setIsSearching(false);
           setSearchResult(null);
           setError(error)
         }
@@ -112,6 +116,7 @@ export const useEmbeddingIndex = (params: UseIndexParams): [State, Actions] => {
       // return above.
       params.verbose && console.log("useIndex:searchRequest:set", request);
       setError(null);
+      setIsSearching(true);
       setSearchRequest(request);
     }
     const insert = (request: InsertRequest): Promise<InsertResult> => {

@@ -18,7 +18,7 @@ export interface Actions extends StableActions {
 
 export interface UseParserParams {
   nludb: NLUDB | null,
-  verbose: boolean,
+  verbose?: boolean,
   model?: string,
   includeEntities?: boolean,
   includeTokens?: boolean,

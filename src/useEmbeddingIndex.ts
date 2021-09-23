@@ -19,11 +19,11 @@ export interface Actions extends StableActions {
 
 export interface UseIndexParams extends CreateIndexRequest {
   nludb: NLUDB | null,
-  verbose: boolean
+  verbose?: boolean
 }
 
 export const useEmbeddingIndex = (params: UseIndexParams): [State, Actions] => {
-  console.log("useEmbeddingIndex:", params.nludb);
+  params.verbose && console.log("useEmbeddingIndex:", params.nludb);
   const [embeddingIndex, setEmbeddingIndex] = useState<EmbeddingIndex | null>(null);
   const [getSearchRequest, setSearchRequest] = useSafeGetSet<SearchRequest | null>(null);
   const [getSearchResult, setSearchResult] = useSafeGetSet<SearchResult | null>(null);

@@ -1,6 +1,6 @@
 {
   "name": "@nludb/react-hooks",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "React Hooks for use with NLUDB",
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
@@ -47,6 +47,6 @@
     "@nludb/client": "^1.0.29",
     "@types/deep-equal": "^1.0.1",
     "deep-equal": "^2.0.5",
-    "react-use": "^17.2.4"
+    "react-use": "^17.3.1"
   }
 }

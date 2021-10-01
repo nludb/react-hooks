@@ -1,7 +1,7 @@
 import { NLUDB, NLUDBError } from '@nludb/client';
 export interface NLUDBReactConnectionParams {
     client?: NLUDB;
-    apiEndpoint?: string;
+    apiDomain?: string;
     apiVersion?: string;
     apiKey?: string;
     verbose?: boolean;

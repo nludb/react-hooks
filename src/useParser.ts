@@ -1,5 +1,5 @@
 import { useMemo, useEffect } from 'react';
-import { NLUDB, ParseRequest, ParseResponse, ParsingModel } from '@nludb/client'
+import { NLUDB, NludbResponse, ParseRequest, ParseResponse, ParsingModel } from '@nludb/client'
 import useSafeGetSet from './util/useSafeGetSet';
 
 export interface State {
@@ -55,11 +55,15 @@ export const useParser = (params: UseParserParams): [State, Actions] => {
         ...getParseRequest(),
       }
       params.nludb.parse(pr as ParseRequest).then(
-        (result: ParseResponse) => {
+        (result: NludbResponse<ParseResponse>) => {
           params.verbose && console.log("useParser:parse:Done", result);
           setIsParsing(false);
           setError(null);
-          setParseResult(result)
+          if (result.data) {
+            setParseResult(result.data)
+          } else {
+            setParseResult(null);
+          }
         },
         (error: Error) => {
           params.verbose && console.log("useParser:parse:Error", error);

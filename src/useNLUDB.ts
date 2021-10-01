@@ -4,7 +4,7 @@ import { useMemo } from 'react'
 
 export interface NLUDBReactConnectionParams {
   client?: NLUDB;
-  apiEndpoint?:string;
+  apiDomain?:string;
   apiVersion?:string;
   apiKey?:string;
   verbose?:boolean;
@@ -24,10 +24,10 @@ export const useNLUDB = (params: NLUDBReactConnectionParams): [NLUDB | null, NLU
         setError(new Error("No API Key provided"))
         return null;
       } else {
-        return new NLUDB(params.apiKey!, params.apiEndpoint)
+        return new NLUDB({apiKey: params.apiKey!, apiDomain: params.apiDomain})
       }
     }
-  }, [params.client, params?.apiKey, params?.apiEndpoint, , params?.apiVersion]);
+  }, [params.client, params?.apiKey, params?.apiDomain, , params?.apiVersion]);
 
   return [nludb, getError()];
 };

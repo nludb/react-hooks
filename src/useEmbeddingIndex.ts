@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect } from 'react';
-import { EmbeddingIndex, InsertRequest, InsertResult, NLUDB, CreateIndexRequest, SearchRequest, SearchResult } from '@nludb/client'
+import { NludbResponse, EmbeddingIndex, InsertRequest, InsertResult, NLUDB, CreateIndexRequest, SearchRequest, SearchResult } from '@nludb/client'
 import useSafeGetSet from './util/useSafeGetSet';
 
 export interface State {
@@ -82,11 +82,15 @@ export const useEmbeddingIndex = (params: UseIndexParams): [State, Actions] => {
       params.verbose && console.log("useIndex:search:Do")
       setIsSearching(true);
       embeddingIndex.search(getSearchRequest()!).then(
-        (result: SearchResult) => {
+        (result: NludbResponse<SearchResult>) => {
           params.verbose && console.log("useIndex:search:Done", result);
           setIsSearching(false);
           setError(null);
-          setSearchResult(result)
+          if (result.data) {
+            setSearchResult(result.data)
+          } else {
+            setSearchResult(null)
+          }
         },
         (error: Error) => {
           params.verbose && console.log("useIndex:search:Error", error);
@@ -120,7 +124,7 @@ export const useEmbeddingIndex = (params: UseIndexParams): [State, Actions] => {
       setIsSearching(true);
       setSearchRequest(request);
     }
-    const insert = (request: InsertRequest): Promise<InsertResult> => {
+    const insert = async (request: InsertRequest): Promise<InsertResult> => {
       // TODO:
       // Can we prevent this from being called *after* the result comes back?
       // The safeGetSet blocks it from causing an infinite loop, so there is
@@ -137,7 +141,12 @@ export const useEmbeddingIndex = (params: UseIndexParams): [State, Actions] => {
         return Promise.reject(new Error("Embedding Index not yet initialized"))
       } else {
         params.verbose && console.log("useIndex:do", request);
-        return embeddingIndex.insert(request)
+        const resp = await embeddingIndex.insert(request)
+        if (resp.data) {
+          return resp.data
+        } else {
+          return Promise.reject(new Error("No response from insert operation"))
+        }
       }
     }
     return { reset, search, insert };

@@ -3,7 +3,7 @@ import { NLUDB, NludbResponse, ParseRequest, ParseResponse, ParsingModel } from 
 import useSafeGetSet from './util/useSafeGetSet';
 
 export interface State {
-  results: ParseResponse | null,
+  results: NludbResponse<ParseResponse> | null,
   isParsing: boolean,
   error: Error | null
 }
@@ -27,7 +27,7 @@ export interface UseParserParams {
 
 export const useParser = (params: UseParserParams): [State, Actions] => {
   const [getParseRequest, setParseRequest] = useSafeGetSet<ParseRequest | null>(null);
-  const [getParseResult, setParseResult] = useSafeGetSet<ParseResponse | null>(null);
+  const [getParseResult, setParseResult] = useSafeGetSet<NludbResponse<ParseResponse> | null>(null);
   const [getError, setError] = useSafeGetSet<Error | null>(null);
   const [getIsParsing, setIsParsing] = useSafeGetSet<boolean>(false);
 
@@ -59,11 +59,7 @@ export const useParser = (params: UseParserParams): [State, Actions] => {
           params.verbose && console.log("useParser:parse:Done", result);
           setIsParsing(false);
           setError(null);
-          if (result.data) {
-            setParseResult(result.data)
-          } else {
-            setParseResult(null);
-          }
+          setParseResult(result)
         },
         (error: Error) => {
           params.verbose && console.log("useParser:parse:Error", error);

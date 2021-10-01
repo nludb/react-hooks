@@ -1,6 +1,6 @@
-import { InsertRequest, NLUDB, CreateIndexRequest, SearchRequest, SearchResult } from '@nludb/client';
+import { NludbResponse, InsertRequest, NLUDB, CreateIndexRequest, SearchRequest, SearchResult } from '@nludb/client';
 export interface State {
-    results: SearchResult | null;
+    results: NludbResponse<SearchResult> | null;
     isReady: boolean;
     isSearching: boolean;
     error: Error | null;

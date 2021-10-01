@@ -1,6 +1,6 @@
-import { NLUDB, ParseRequest, ParseResponse } from '@nludb/client';
+import { NLUDB, NludbResponse, ParseRequest, ParseResponse } from '@nludb/client';
 export interface State {
-    results: ParseResponse | null;
+    results: NludbResponse<ParseResponse> | null;
     isParsing: boolean;
     error: Error | null;
 }

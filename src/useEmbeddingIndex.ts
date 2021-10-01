@@ -3,7 +3,7 @@ import { NludbResponse, EmbeddingIndex, InsertRequest, InsertResult, NLUDB, Crea
 import useSafeGetSet from './util/useSafeGetSet';
 
 export interface State {
-  results: SearchResult | null,
+  results: NludbResponse<SearchResult> | null,
   isReady: boolean;
   isSearching: boolean,
   error: Error | null
@@ -27,7 +27,7 @@ export const useEmbeddingIndex = (params: UseIndexParams): [State, Actions] => {
   params.verbose && console.log("useEmbeddingIndex:", params.nludb);
   const [embeddingIndex, setEmbeddingIndex] = useState<EmbeddingIndex | null>(null);
   const [getSearchRequest, setSearchRequest] = useSafeGetSet<SearchRequest | null>(null);
-  const [getSearchResult, setSearchResult] = useSafeGetSet<SearchResult | null>(null);
+  const [getSearchResult, setSearchResult] = useSafeGetSet<NludbResponse<SearchResult> | null>(null);
   const [getError, setError] = useSafeGetSet<Error | null>(null);
   const [getIsSearching, setIsSearching] = useSafeGetSet<boolean>(false);
 
@@ -86,11 +86,7 @@ export const useEmbeddingIndex = (params: UseIndexParams): [State, Actions] => {
           params.verbose && console.log("useIndex:search:Done", result);
           setIsSearching(false);
           setError(null);
-          if (result.data) {
-            setSearchResult(result.data)
-          } else {
-            setSearchResult(null)
-          }
+          setSearchResult(result)
         },
         (error: Error) => {
           params.verbose && console.log("useIndex:search:Error", error);
